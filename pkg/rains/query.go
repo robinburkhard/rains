@@ -47,15 +47,15 @@ func (m Message) String() string {
 // Query queries the RAINS server at addr for name and returns a map of values
 // each corresponding to a type requested by types
 func Query(name, context string, types []Type, opts []Option,
-	expire, timeout time.Duration, addr net.Addr) (map[Type]string, error) {
+	expire, timeout time.Duration, addr net.Addr) (map[Type]string, error, bool) {
 
 	raw, err := QueryRaw(name, context, types, opts, expire, timeout, addr)
 	if err != nil {
-		return nil, err
+		return nil, err, false
 	}
 	res, err := raw.ParseMessage()
 	if err != nil {
-		return nil, err
+		return nil, err, true
 	}
 
 	// only return requested types
@@ -64,7 +64,7 @@ func Query(name, context string, types []Type, opts []Option,
 		m[t] = res[t]
 	}
 
-	return m, nil
+	return m, nil, true
 }
 
 // QueryRaw queries the RAINS server at addr for name and returns the raw reply
