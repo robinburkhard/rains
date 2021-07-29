@@ -1,6 +1,6 @@
 module github.com/netsec-ethz/rains
 
-go 1.13
+go 1.16
 
 require (
 	github.com/britram/borat v0.0.0-20181011130314-f891bcfcfb9b
